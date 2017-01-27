@@ -1,0 +1,69 @@
+version: '2'
+services:
+  elasticsearch:
+    image: elasticsearch:2.4.4
+    ports:
+      - '9200:9200'
+      - '9300:9300'
+    volumes:
+      - elasticsearch:/usr/share/elasticsearch/data
+  postgres:
+    image: postgres:latest
+    ports:
+      - '5432:5432'
+    volumes:
+      - postgres:/var/lib/postgresql/data
+  rails:
+    build: .
+    command: bin/docker-start-rails
+    depends_on:
+      - elasticsearch
+      - postgres
+      - redis
+    environment:
+      - ELASTICSEARCH_HOST=elasticsearch
+      - POSTGRES_HOST=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+      - RAILS_ENV=development
+      - REDIS_HOST=redis
+    ports:
+      - '3000:3000'
+    volumes:
+      - .:/rails
+      - bundle:/usr/local/bundle
+  redis:
+    image: redis:latest
+    ports:
+      - '6379:6379'
+    volumes:
+      - redis:/data
+  sidekiq:
+    command: bin/docker-start-sidekiq
+    environment:
+      - ELASTICSEARCH_HOST=elasticsearch
+      - POSTGRES_HOST=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+      - RAILS_ENV=development
+      - RAILS_HOST=rails
+      - REDIS_HOST=redis
+      - TIKA_HOST=tika
+    depends_on:
+      - elasticsearch
+      - postgres
+      - rails
+      - redis
+      - tika
+    image: dockerrailstikaelasticsearch_rails
+    volumes_from:
+      - rails
+  tika:
+    image: logicalspark/docker-tikaserver:latest
+    ports:
+      - '9998:9998'
+volumes:
+  elasticsearch: {}
+  bundle: {}
+  postgres: {}
+  redis: {}

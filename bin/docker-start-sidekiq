@@ -1,0 +1,11 @@
+#!/bin/sh
+
+set -x
+
+# wait for rails
+until nc -vz $RAILS_HOST 3000 2>/dev/null; do
+  echo "Rails is not ready, sleeping."
+  sleep 1
+done
+
+sidekiq

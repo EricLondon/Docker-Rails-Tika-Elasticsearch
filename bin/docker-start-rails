@@ -1,0 +1,23 @@
+#!/bin/sh
+
+set -x
+
+# wait for postgresql
+until nc -vz $POSTGRES_HOST 5432 2>/dev/null; do
+  echo "Postgresql is not ready, sleeping."
+  sleep 1
+done
+
+# wait for elasticsearch
+until nc -vz $ELASTICSEARCH_HOST 9200 2>/dev/null; do
+  echo "Elasticsearch is not ready, sleeping."
+  sleep 1
+done
+
+gem install bundler
+bundle check || bundle install
+
+rake db:create
+rake db:migrate
+
+bundle exec puma -C config/puma.rb
