@@ -1,24 +1,3 @@
-# README
+# Integrate the Tika REST service with Rails paperclip attachments to extract text from PDF documents and store in Elasticsearch
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+see blog post here: http://ericlondon.com/2017/02/01/integrate-tika-rest-service-with-rails-paperclip-attachments-to-extract-text-from-pdf-documents-and-store-in-elasticsearch.html
