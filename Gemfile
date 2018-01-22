@@ -41,7 +41,7 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'dotenv-rails'
-gem 'elasticsearch-model'
-gem 'elasticsearch-rails'
+gem 'elasticsearch-model', github: 'elastic/elasticsearch-rails', branch: '2.x'
+gem 'elasticsearch-rails', github: 'elastic/elasticsearch-rails', branch: '2.x'
 gem 'paperclip', '~> 5.0'
 gem 'sidekiq'
