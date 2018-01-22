@@ -175,7 +175,7 @@ DEPENDENCIES
   elasticsearch-model!
   elasticsearch-rails!
   listen (~> 3.0.5)
-  paperclip (~> 5.0)
+  paperclip (~> 5.1)
   pg (~> 0.18)
   puma (~> 3.0)
   rails (~> 5.0.1)
